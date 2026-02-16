@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
   } else if (req.url === '/contact'|| req.url==='/contact-me'||req.url==='/contact.html' || req.url==='/contact-me.html') {
     filePath = './infoSite/contact-me.html';
   }else{
-    filePath = './404.html';
+    filePath = './infoSite/404.html';
   }
 
   fs.readFile(filePath, (err, data) => {
