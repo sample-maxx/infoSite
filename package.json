@@ -4,5 +4,24 @@
     "start": "node index.js",
     "dev": "node --run start -- --watch",
     "test": "node --test"
+  },
+  "name": "infosite",
+  "version": "1.0.0",
+  "description": "A **README.md** file is an important part of any GitHub repository, as it provides an overview of your project, how to set it up, and other relevant information. Here's an example of a basic README file tailored to your project (static website with HTML, CSS, JS files):",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sample-maxx/infoSite.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sample-maxx/infoSite/issues"
+  },
+  "homepage": "https://github.com/sample-maxx/infoSite#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "helmet": "^8.1.0"
   }
 }

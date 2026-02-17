@@ -1,30 +1,41 @@
-import http from 'http';
-import fs from 'fs';
+import express from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const server = http.createServer((req, res) => {
-  let filePath = './infoSite/index.html';
+// Get the directory name using import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-  if (req.url === '/about'|| req.url==='/about.html') {
-    filePath = './infoSite/about.html';
-  }else if (req.url===''||req.url==='/' ||req.url === '/index' || req.url==='/index.html') {
-    filePath = './infoSite/index.html';
-  } else if (req.url === '/contact'|| req.url==='/contact-me'||req.url==='/contact.html' || req.url==='/contact-me.html') {
-    filePath = './infoSite/contact-me.html';
-  }else{
-    filePath = './infoSite/404.html';
-  }
+const app = express();
 
-  fs.readFile(filePath, (err, data) => {
-    if (err) {
-      res.writeHead(404);
-      res.end('File not found');
-      return;
-    }
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.end(data);
-  });
+// Serve static files from the 'infoSite' folder
+app.use(express.static(path.join(__dirname, 'infoSite')));
+
+// Route for the homepage or index
+app.get(['/', '/index', '/index.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
-server.listen(8080, () => {
+
+// Route for About page
+app.get(['/about', '/about.html'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'about.html'));
+});
+
+// Route for Contact page
+app.get(['/contact', '/contact-me', '/contact.html', '/contact-me.html'], (req, res) => {
+  res.sendFile(path.join(__dirname,'contact-me.html'));
+});
+
+// Custom 404 handling for undefined routes
+app.get('/404', (req, res) => {
+  res.sendFile(path.join(__dirname, '404.html'));
+});
+
+// Explicitly handle undefined routes and redirect to 404 page
+app.use((req, res) => {
+  res.redirect('/404');
+});
+
+app.listen(8080, () => {
   console.log('Server running at http://localhost:8080');
 });
